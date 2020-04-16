@@ -1,6 +1,6 @@
 # Status Coronavoucher
 
-Visualize o status atual da sua solicitação do auxílio emergencial pelo terminal durante o dia
+Visualize o status atual da sua solicitação do [auxílio emergencial](https://auxilio.caixa.gov.br/#/inicio) pelo terminal durante o dia
 
 > Este projeto não é uma implementação da Caixa e tampouco com apoio da mesma
 
