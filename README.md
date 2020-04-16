@@ -2,7 +2,7 @@
 
 Visualize o status atual da sua solicitação do auxílio emergencial pelo terminal durante o dia
 
->> Este projeto não é uma implementação da Caixa e tampouco com apoio da mesma
+> Este projeto não é uma implementação da Caixa e tampouco com apoio da mesma
 
 ## Objetivo
 
@@ -47,3 +47,7 @@ python main.py
 Caso tenha dicas e propostas para melhorar o projeto, abra uma issue detalhando o que você propõe.
 
 Toda contribuição é bem vinda. 
+
+## Licença
+
+[MIT](https://github.com/matheusfelipeog/status-coronavoucher/blob/master/LICENSE)
