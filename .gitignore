@@ -1,0 +1,7 @@
+# Ignore recursos de ambiente
+venv/
+.vscode/
+data.json
+
+# Ignore diretórios de cache
+__pycache__/
