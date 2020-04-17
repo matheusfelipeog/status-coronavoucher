@@ -63,8 +63,8 @@ class Coronavoucher(object):
     def __exit__(self, type, value, traceback):
         self._session.close()
 
-    def get_status(self) -> dict:
-        """Pega o status do coronavoucher.
+    def get_data(self) -> dict:
+        """Pega os dados do coronavoucher.
         
         @return `dict` -> Retorna um dicionário com todas as informações.
         """
@@ -82,7 +82,7 @@ class Coronavoucher(object):
         
         @return `str`-> Retorna um template simples para ser printado com as informações.
         """
-        status = self.get_status()
+        status = self.get_data()
 
         template = f'\nNome: {status["noPessoa"]}\nCPF: {status["cpf"]}\nStatus: {status["situacao"]}\n'
 
@@ -93,7 +93,7 @@ class Coronavoucher(object):
         
         @return `str` -> Retorna um template para ser printado com as informações. 
         """
-        all_info = self.get_status()
+        all_info = self.get_data()
 
         template = f'\nNome: {all_info["noPessoa"]}\nCPF: {all_info["cpf"]}\nSexo: {all_info["sexo"]}'
         template += f'\nBanco: {all_info["banco"]}\nBolsa Familia: {all_info["bolsa_familia"]}'
