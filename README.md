@@ -1,6 +1,6 @@
 # Status Coronavoucher
 
-Visualize o status atual da sua solicitação do [auxílio emergencial](https://auxilio.caixa.gov.br/#/inicio) pelo terminal durante o dia
+Visualize o status atual da sua solicitação do [auxílio emergencial](https://auxilio.caixa.gov.br/#/inicio) pelo terminal.
 
 > Este projeto não é uma implementação da Caixa e tampouco com apoio da mesma
 
@@ -24,22 +24,29 @@ pip install requests
 
 ## Execução
 
-Para executar o projeto, informe seus dados no arquivo `main.py`
-
-```python
-if __name__ == '__main__':
-    from status_coronavoucher import Coronavoucher
-
-    cpf = 'CPF AQUI'  # Tudo junto, sem espaço
-    sms_token = 'SMS TOKEN AQUI'  # Tudo junto, sem espaço
-
-    with Coronavoucher(cpf, sms_token) as Cv:
-        print(Cv.show_status())
-
+**Execute o script diretamente na linha de comando com:**
 ```
-Execute o script com:
+python main.py 12345678901 445566
 ```
-python main.py
+
+**Retorno resumido:**
+```
+Nome: Fulano de Tal Uzumaki
+CPF: 12345678901
+Status: Aguardando
+```
+
+**Retorno completo:**
+```
+Nome: Fulano de Tal Uzumaki
+CPF: 12345678901
+Sexo: None
+Banco: None
+Bolsa Familia: False
+Motivo: None
+Nº Situação Cadastral: 5
+Data e Hora de Cadastro: 2020-04-08T18:21:20.192
+Status Atual: Aguardando
 ```
 
 ## Contribuições
