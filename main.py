@@ -16,4 +16,4 @@ if __name__ == '__main__':
     sms_token = sys.argv[2]
 
     with Coronavoucher(cpf, sms_token) as Cv:
-        print(Cv.show_status())
+        print(Cv.show_data())

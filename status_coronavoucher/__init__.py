@@ -63,6 +63,35 @@ class Coronavoucher(object):
     def __exit__(self, type, value, traceback):
         self._session.close()
 
+    def _data_verification(self, data: dict) -> dict:
+        """Verifica se existiu um erro retornado pelo server."""
+
+        http_code = data.get('codigo', 200)  # Se não existe a chave "codigo" retorna 200
+
+        if http_code == 200:
+            # Dados válidos, contendo todas as informações do coronavoucher
+            return {"http_code": http_code, "data": data}
+
+        else:  # Erro retornado pelo server
+            return {"http_code": data.get('codigo'), "data": data}
+
+    def _get_msg_error(self, data: dict) -> str:
+        """Cria uma mensagem de erro para ser exibida."""
+
+        cod_error = data['http_code']
+
+        msg_error = ''
+        if int(cod_error) == 401:
+            msg_error =  f'\n[Erro]: {data["data"]["mensagem"]}\n'
+
+        elif int(cod_error) == 404:
+            msg_error =  f'\n[Erro]: {data["data"]["mensagem"]}\n'
+
+        else:
+            msg_error = '\nOcorreu um erro, tente novamente...\n'
+
+        return msg_error
+        
     def get_data(self) -> dict:
         """Pega os dados do coronavoucher.
         
@@ -77,28 +106,44 @@ class Coronavoucher(object):
             )
         return response.json()
 
-    def show_status(self) -> str:
+    def show_data(self) -> str:
         """Mostrar Nome, CPF e Situação do coronavoucher.
         
         @return `str`-> Retorna um template simples para ser printado com as informações.
         """
-        status = self.get_data()
+        response = self._data_verification(self.get_data())
 
-        template = f'\nNome: {status["noPessoa"]}\nCPF: {status["cpf"]}\nStatus: {status["situacao"]}\n'
+        template = ''
+        if response.get('http_code') == 200:
+
+            status = response.get('data')
+
+            template = f'\nNome: {status["noPessoa"]}\nCPF: {status["cpf"]}\nStatus: {status["situacao"]}\n'
+
+        else:
+            template = self._get_msg_error(response)
 
         return template
 
-    def show_all_infos(self) -> str:
-        """Mostrar todas as informações do coronavoucher.
+    def show_all_data(self) -> str:
+        """Mostrar todas os dados do status do coronavoucher.
         
         @return `str` -> Retorna um template para ser printado com as informações. 
         """
-        all_info = self.get_data()
+        response = self._data_verification(self.get_data())
 
-        template = f'\nNome: {all_info["noPessoa"]}\nCPF: {all_info["cpf"]}\nSexo: {all_info["sexo"]}'
-        template += f'\nBanco: {all_info["banco"]}\nBolsa Familia: {all_info["bolsa_familia"]}'
-        template += f'\nMotivo: {all_info["motivo"]}\nNº Situação Cadastral: {all_info["nuSituacaoCadastro"]}'
-        template += f'\nData e Hora de Cadastro: {all_info["dhFinalizacaoCadastro"]}'
-        template += f'\nStatus Atual: {all_info["situacao"]}\n'
+        template = ''
+        if response.get('http_code') == 200:
+
+            all_data = response.get('data')
+
+            template = f'\nNome: {all_data["noPessoa"]}\nCPF: {all_data["cpf"]}\nSexo: {all_data["sexo"]}'
+            template += f'\nBanco: {all_data["banco"]}\nBolsa Familia: {all_data["bolsa_familia"]}'
+            template += f'\nMotivo: {all_data["motivo"]}\nNº Situação Cadastral: {all_data["nuSituacaoCadastro"]}'
+            template += f'\nData e Hora de Cadastro: {all_data["dhFinalizacaoCadastro"]}'
+            template += f'\nStatus Atual: {all_data["situacao"]}\n'
+
+        else:
+            template = self._get_msg_error(response)
 
         return template
