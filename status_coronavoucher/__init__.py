@@ -7,7 +7,24 @@ import json
 
 
 class Coronavoucher(object):
-    """Classe para obter o status da situação atual do auxílio emergencial."""
+    """Classe para obter o status da situação atual do auxílio emergencial.
+
+    Metódos públicos:
+
+    >>> show_data(...)  # Mostre os dados parcial.
+
+    >>> show_all_data(...)  # Mostre os dados completos.
+
+    >>> get_data(...)  # Obtenha os dados puros.
+
+    Metódos internos:
+
+    >>>  _request_a_new_sms_token(...)  # Solicite um novo código sms.
+
+    >>>  _data_verification(...)  # Verifique se os dados estão válidos
+
+    >>>  _get_msg_error(...)  # Pegue a mensagem de erro com base nos dados.
+    """
     
     def __init__(self, cpf: str, sms_token: str, session: requests.Session=None):
         """
@@ -63,8 +80,33 @@ class Coronavoucher(object):
     def __exit__(self, type, value, traceback):
         self._session.close()
 
+    def _request_a_new_sms_token(self) -> dict:
+        """Solicitar um novo token sms para validação."""
+        temp_url = 'https://auxilio.caixa.gov.br/api/sms/validarLogin'
+
+        temp_payload = {"cpf": int(self.cpf)}
+
+        # Cópia temporária do headers, alterando o path e o method
+        temp_headers = self._headers.copy()
+        temp_headers["path"] = '/api/sms/validarLogin'
+        temp_headers["method"] = 'POST'
+
+        response = self._session.post(
+                temp_url,
+                data=json.dumps(temp_payload),
+                headers=temp_headers,
+                verify=True
+            )
+
+        return response.json()
+
     def _data_verification(self, data: dict) -> dict:
-        """Verifica se existiu um erro retornado pelo server."""
+        """Verifica se existiu um erro retornado pelo server.
+        
+        @data `dict` -> Dados do coronavoucher em formato dict.
+
+        @return `str` ->  Nova estrutura com http code.
+        """
 
         http_code = data.get('codigo', 200)  # Se não existe a chave "codigo" retorna 200
 
@@ -76,15 +118,20 @@ class Coronavoucher(object):
             return {"http_code": data.get('codigo'), "data": data}
 
     def _get_msg_error(self, data: dict) -> str:
-        """Cria uma mensagem de erro para ser exibida."""
+        """Cria uma mensagem de erro para ser exibida.
+        
+        @data `dict` -> Dados do coronavoucher em formato dict.
+
+        @return `str` ->  Mensagem de erro com base no http code.
+        """
 
         cod_error = data['http_code']
 
         msg_error = ''
-        if int(cod_error) == 401:
+        if int(cod_error) == 401:  # Token SMS inválido ou expirado
             msg_error =  f'\n[Erro]: {data["data"]["mensagem"]}\n'
 
-        elif int(cod_error) == 404:
+        elif int(cod_error) == 404:  # CPF Incorreto ou inválido
             msg_error =  f'\n[Erro]: {data["data"]["mensagem"]}\n'
 
         else:
@@ -109,7 +156,7 @@ class Coronavoucher(object):
     def show_data(self) -> str:
         """Mostrar Nome, CPF e Situação do coronavoucher.
         
-        @return `str`-> Retorna um template simples para ser printado com as informações.
+        @return `str` -> Retorna um template simples para ser printado com as informações.
         """
         response = self._data_verification(self.get_data())
 
@@ -122,6 +169,11 @@ class Coronavoucher(object):
 
         else:
             template = self._get_msg_error(response)
+
+            if response.get('http_code') == 401:
+                template += '[Erro]: Solicitando um novo código, aguarde...\n'
+                new_sms_token = self._request_a_new_sms_token()
+                template += f'[Erro]: {new_sms_token["mensagem"]}.\n'
 
         return template
 
@@ -145,5 +197,10 @@ class Coronavoucher(object):
 
         else:
             template = self._get_msg_error(response)
+
+            if response.get('http_code') == 401:
+                template += '[Erro]: Solicitando um novo código, aguarde...\n'
+                new_sms_token = self._request_a_new_sms_token()
+                template += f'[Erro]: {new_sms_token["mensagem"]}.\n'
 
         return template
