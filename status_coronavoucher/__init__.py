@@ -129,10 +129,10 @@ class Coronavoucher(object):
 
         msg_error = ''
         if int(cod_error) == 401:  # Token SMS inválido ou expirado
-            msg_error =  f'\n[Erro]: {data["data"]["mensagem"]}\n'
+            msg_error =  f'\n[Error]: {data["data"]["mensagem"]}\n'
 
         elif int(cod_error) == 404:  # CPF Incorreto ou inválido
-            msg_error =  f'\n[Erro]: {data["data"]["mensagem"]}\n'
+            msg_error =  f'\n[Error]: {data["data"]["mensagem"]}\n'
 
         else:
             msg_error = '\nOcorreu um erro, tente novamente...\n'
@@ -171,9 +171,9 @@ class Coronavoucher(object):
             template = self._get_msg_error(response)
 
             if response.get('http_code') == 401:
-                template += '[Erro]: Solicitando um novo código, aguarde...\n'
+                template += '[Token]: Solicitando um novo código, aguarde...\n'
                 new_sms_token = self._request_a_new_sms_token()
-                template += f'[Erro]: {new_sms_token["mensagem"]}.\n'
+                template += f'[Token]: {new_sms_token["mensagem"]}.\n'
 
         return template
 
@@ -199,8 +199,8 @@ class Coronavoucher(object):
             template = self._get_msg_error(response)
 
             if response.get('http_code') == 401:
-                template += '[Erro]: Solicitando um novo código, aguarde...\n'
+                template += '[Token]: Solicitando um novo código, aguarde...\n'
                 new_sms_token = self._request_a_new_sms_token()
-                template += f'[Erro]: {new_sms_token["mensagem"]}.\n'
+                template += f'[Token]: {new_sms_token["mensagem"]}.\n'
 
         return template
