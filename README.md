@@ -2,7 +2,7 @@
 
 Visualize o status atual da sua solicitação do [auxílio emergencial](https://auxilio.caixa.gov.br/#/inicio) pelo terminal.
 
-> OBS: Este projeto não é uma implementação da Caixa e tampouco com apoio da mesma
+> OBS: Este projeto não é uma implementação da Caixa e tampouco com apoio da mesma.
 
 ## Objetivo
 
@@ -18,7 +18,7 @@ A consulta é feita diretamente no servidor da caixa, assim evitando: *acessar o
 
 ## Instalação
 
-O projeto é contruído em `Python 3.x`, então é necessário ter instalado em sua maquína. [Clique aqui para baixar](https://www.python.org/downloads/)
+O projeto é contruído em `Python 3.x`, então é necessário ter instalado em sua maquína. [[clique aqui para baixar]](https://www.python.org/downloads/)
 
 Após a instalação do Python, faça o download do repositório ou clone o repositório com:
 ```git
@@ -102,4 +102,4 @@ Toda contribuição é bem vinda.
 
 ## Licença
 
-Este projeto está sobre a licença [MIT](https://github.com/matheusfelipeog/status-coronavoucher/blob/master/LICENSE)
+Este projeto está sobre a licença [MIT](https://github.com/matheusfelipeog/status-coronavoucher/blob/master/LICENSE).
