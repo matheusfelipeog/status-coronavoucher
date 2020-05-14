@@ -57,7 +57,7 @@ if __name__ == '__main__':
         '-desc', '--desconhecida',
         action='store',
         type=bool,
-        help='Caso a mãe do solicitante não seja conhecida informe True',
+        help='Informe se a mãe é desconhecida com True. False é o padrão',
         metavar='desc',
         default=False,
         choices=[True, False]
