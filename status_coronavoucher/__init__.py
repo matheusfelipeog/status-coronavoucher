@@ -28,18 +28,24 @@ class Coronavoucher(object):
     
     def __init__(
             self,
-            cpf: str,
+            cpf: int,
             nome: str,
             data_nasc: str,
             nome_mae: str,
-            mae_desconhecida: str=False,
+            mae_desconhecida: bool=False,
             session: requests.Session=None
         ):
         """
-        @cpf `str` -> Corresponde aos 11 digitos do CPF do indivíduo, no formato: 00000000000
-
-        @sms_token `str` -> Corresponde aos 6 digitos do token que é enviado para seu celular via sms
+        @cpf `int` -> Corresponde aos 11 digitos do CPF do indivíduo, no formato: 00000000000
         
+        @nome `str` -> Corresponde ao nome do solicitante do coronavoucher
+        
+        @data_nasc `str` -> Corresponde a data de nascimento do solicitante do coronavoucher
+        
+        @nome_mae `str` -> Corresponde ao nome da mãe do solicitante do coronavoucher
+
+        @mae_desconhecida `bool` -> Para informar em casos de mãe desconhecida
+
         @session `Session` -> Corresponde a instância de Session para manipulação HTTP
         """
 
@@ -65,6 +71,8 @@ class Coronavoucher(object):
                 "isMaeDesconhecida": self.mae_desconhecida
             }
 
+        # Em caso de mãe desconhecida será removida a chave-valor
+        # correspondente para envio correto do payload
         if self.mae_desconhecida:
             del self._payload['nomeMae']
 
@@ -133,11 +141,10 @@ class Coronavoucher(object):
         if int(cod_error) == 404:  # CPF Incorreto ou inválido
             msg_error =  f'\n[Info]: {data["data"]["mensagem"]}\n'
 
-        elif int(cod_error) == 415:  
+        elif int(cod_error) == 415:  # Dados divergentes comparados a base de dados
             msg_error =  f'\n[Info]: {data["data"]["mensagem"]}\n'
 
         else:
-            print(cod_error)
             msg_error = '\nOcorreu um erro, tente novamente...\n'
 
         return msg_error
@@ -189,9 +196,12 @@ class Coronavoucher(object):
 
             template = f'\nNome: {all_data["noPessoa"]}\nCPF: {all_data["cpf"]}\nSexo: {all_data["sexo"]}'
             template += f'\nBanco: {all_data["banco"]}\nBolsa Familia: {all_data["bolsa_familia"]}'
-            template += f'\nMotivo: {all_data["motivo"]}\nNº Situação Cadastral: {all_data["nuSituacaoCadastro"]}'
+            template += f'\nNº Situação Cadastral: {all_data["nuSituacaoCadastro"]}'
             template += f'\nData e Hora de Cadastro: {all_data["dhFinalizacaoCadastro"]}'
-            template += f'\nStatus Atual: {all_data["situacao"]}\n'
+            template += f'\nStatus Atual: {all_data["situacao"]}\nMotivo: {all_data["motivo"]}'
+            template += f'\nValor Benefício: {all_data["vr_beneficio"]}'
+            template += f'\nDE Situação Crédito: {all_data["de_situacao_credito"]}'
+            template += f'\nDT Situação Crédito: {all_data["dt_situacao_credito"]}\n'
 
         else:
             template = self._get_msg_error(response)
