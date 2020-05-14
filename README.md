@@ -35,24 +35,30 @@ O programa possuí uma interface de linha de comando, assim facilitando ainda ma
 
 **Para utilização básica, use:**
 ```
-$ python cli.py 12345678910 445566
+$ python cli.py 12345678910 "Fulano de Tal Uzumaki" 1997-10-10 "Fulana Uzumaki de Tal"
 ```
 
 **Para mais, veja a ajuda:**
 ```
 $ python cli.py -h
 
-usage: python cli.py [-h] cpf token [options]
+usage: python cli.py [-h] cpf nome nasc mae desc [options]
 
 Consulte a situação atual do auxílio emergencial.
 
 positional arguments:
   CPF                   os 11 digitos do CPF, sem espaço ou caracteres
                         especiais.
-  TOKEN                 os 6 digitos do token SMS que é enviado.
+  NOME                  O nome informado na hora do cadastro no sitema.
+  NASC                  A data de nascimento no formato AA-MM-DD (Ano-Mês-
+                        Dia).
+  MAE                   Nome da mãe do solicitante do auxílio.
 
 optional arguments:
   -h, --help            show this help message and exit
+  -desc desc, --desconhecida desc
+                        Informe se a mãe é desconhecida com True. False é o
+                        padrão
   -f format, --format format
                         formato de retorno -> [simple, complete, raw]
 ```
@@ -73,10 +79,13 @@ CPF: 12345678901
 Sexo: None
 Banco: None
 Bolsa Familia: False
-Motivo: None
 Nº Situação Cadastral: 5
-Data e Hora de Cadastro: 2020-04-08T18:21:20.192
+Data e Hora de Cadastro: 4/08/2020 21:20.192 PM
 Status Atual: Aguardando
+Motivo: None
+Valor Benefício: None
+DE Situação Crédito: None
+DT Situação Crédito: None
 ```
 
 `raw`:
@@ -91,7 +100,10 @@ Status Atual: Aguardando
   'noPessoa': 'Fulano de Tal Uzumaki',
   'nuSituacaoCadastro': 5,
   'dhFinalizacaoCadastro': '2020-04-08T18:21:20.192'
-}
+  'dt_situacao_credito': None,
+  'de_situacao_credito': None,
+  'vr_beneficio': None
+ }
 ```
 
 ## Contribuições
