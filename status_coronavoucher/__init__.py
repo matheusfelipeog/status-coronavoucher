@@ -26,7 +26,15 @@ class Coronavoucher(object):
     >>>  _get_msg_error(...)  # Pegue a mensagem de erro com base nos dados.
     """
     
-    def __init__(self, cpf: str, sms_token: str, session: requests.Session=None):
+    def __init__(
+            self,
+            cpf: str,
+            nome: str,
+            data_nasc: str,
+            nome_mae: str,
+            mae_desconhecida: str=False,
+            session: requests.Session=None
+        ):
         """
         @cpf `str` -> Corresponde aos 11 digitos do CPF do indivíduo, no formato: 00000000000
 
@@ -41,14 +49,25 @@ class Coronavoucher(object):
         else:
             self._session = session
 
-        self.cpf = str(cpf)
-        self.sms_token = str(sms_token)
+        self.cpf = cpf
+        self.nome = str(nome)
+        self.data_nasc = str(data_nasc)
+        self.nome_mae = str(nome_mae)
+        self.mae_desconhecida = bool(mae_desconhecida)
 
-        self._url = 'https://auxilio.caixa.gov.br/api/cadastro/validarLogin/{}'.format(self.cpf)
+        self._url = 'https://auxilio.caixa.gov.br/api/cadastro/validarLogin/'
 
         self._payload = {
-            "token": self.sms_token
+                "nome": self.nome,
+                "cpf": self.cpf,
+                "dataNascimento": self.data_nasc,
+                "nomeMae": self.nome_mae,
+                "isMaeDesconhecida": self.mae_desconhecida
             }
+
+        if self.mae_desconhecida:
+            del self._payload['nomeMae']
+
         self._headers = {
             "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.113 Safari/537.36",
             "authority": "auxilio.caixa.gov.br",

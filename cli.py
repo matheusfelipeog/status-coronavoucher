@@ -25,13 +25,42 @@ if __name__ == '__main__':
         metavar='CPF',
     )
 
-    # Parâmetro token, que corresponde aos digitos enviados via SMS para o smartphone.
+    # Parâmetro nome, que corresponde ao nome informado na hora do cadastro no sistema do auxílio.
     parser.add_argument(
-        'token',
+        'nome',
         action='store',
-        type=int,
-        help='os 6 digitos do token SMS que é enviado.',
-        metavar='TOKEN',
+        type=str,
+        help='O nome informado na hora do cadastro no sitema.',
+        metavar='NOME',
+    )
+
+    # Parâmetro nasc, que corresponde a data de nascimento no formato Ano-Mês-Dia
+    parser.add_argument(
+        'nasc',
+        action='store',
+        type=str,
+        help='A data de nascimento no formato AA-MM-DD (Ano-Mês-Dia).',
+        metavar='NASC',
+    )
+
+    # Parâmetro mae, que corresponde ao nome da mãe do solicitante do auxílio.
+    parser.add_argument(
+        'mae',
+        action='store',
+        type=str,
+        help='Nome da mãe do solicitante do auxílio.',
+        metavar='MAE',
+    )
+
+    # Parâmetro desc/desconhecida, caso a mãe do solicitante não seja conhecida.
+    parser.add_argument(
+        '-desc', '--desconhecida',
+        action='store',
+        type=bool,
+        help='Caso a mãe do solicitante não seja conhecida informe True',
+        metavar='desc',
+        default=False,
+        choices=[True, False]
     )
 
     # Configuração do parâmetro que determina o formato da saída para visualização dos dados
@@ -50,9 +79,12 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     cpf = args.cpf 
-    sms_token = args.token
+    nome = args.nome
+    nasc = args.nasc
+    mae = args.mae
+    desc = args.desconhecida
 
-    with Coronavoucher(cpf, sms_token) as Cv:
+    with Coronavoucher(cpf, nome, nasc, mae, desc) as Cv:
 
         if args.format == 'simple':
             print(Cv.show_data())
