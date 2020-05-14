@@ -88,7 +88,10 @@ class Coronavoucher(object):
         }
 
     def __repr__(self):
-        return f'Coronavoucher(cpf=<{self.cpf}>, sms_token=<{self.sms_token}>, session={self._session})'
+        return f'Coronavoucher( \
+            cpf=<{self.cpf}>, nome=<{self.nome}>, data_nasc=<{self.data_nasc}>, \
+            nome_mae=<{self.nome_mae}>, mae_desconhecida=<{self.mae_desconhecida}>, \
+            session={self._session})'
 
     def __str__(self):
         return self.__repr__()
@@ -98,26 +101,6 @@ class Coronavoucher(object):
     
     def __exit__(self, type, value, traceback):
         self._session.close()
-
-    def _request_a_new_sms_token(self) -> dict:
-        """Solicitar um novo token sms para validação."""
-        temp_url = 'https://auxilio.caixa.gov.br/api/sms/validarLogin'
-
-        temp_payload = {"cpf": int(self.cpf)}
-
-        # Cópia temporária do headers, alterando o path e o method
-        temp_headers = self._headers.copy()
-        temp_headers["path"] = '/api/sms/validarLogin'
-        temp_headers["method"] = 'POST'
-
-        response = self._session.post(
-                temp_url,
-                data=json.dumps(temp_payload),
-                headers=temp_headers,
-                verify=True
-            )
-
-        return response.json()
 
     def _data_verification(self, data: dict) -> dict:
         """Verifica se existiu um erro retornado pelo server.
@@ -147,13 +130,14 @@ class Coronavoucher(object):
         cod_error = data['http_code']
 
         msg_error = ''
-        if int(cod_error) == 401:  # Token SMS inválido ou expirado
+        if int(cod_error) == 404:  # CPF Incorreto ou inválido
             msg_error =  f'\n[Info]: {data["data"]["mensagem"]}\n'
 
-        elif int(cod_error) == 404:  # CPF Incorreto ou inválido
+        elif int(cod_error) == 415:  
             msg_error =  f'\n[Info]: {data["data"]["mensagem"]}\n'
 
         else:
+            print(cod_error)
             msg_error = '\nOcorreu um erro, tente novamente...\n'
 
         return msg_error
@@ -189,11 +173,6 @@ class Coronavoucher(object):
         else:
             template = self._get_msg_error(response)
 
-            if response.get('http_code') == 401:
-                template += '[Info]: Solicitando um novo código, aguarde...\n'
-                new_sms_token = self._request_a_new_sms_token()
-                template += f'[Info]: {new_sms_token["mensagem"]}.\n'
-
         return template
 
     def show_all_data(self) -> str:
@@ -216,10 +195,5 @@ class Coronavoucher(object):
 
         else:
             template = self._get_msg_error(response)
-
-            if response.get('http_code') == 401:
-                template += '[Info]: Solicitando um novo código, aguarde...\n'
-                new_sms_token = self._request_a_new_sms_token()
-                template += f'[Info]: {new_sms_token["mensagem"]}.\n'
 
         return template
