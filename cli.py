@@ -12,7 +12,7 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(
             prog='cli.py',
-            usage='python %(prog)s [-h] cpf nome nasc mae desc [options]',
+            usage='python %(prog)s [-h] cpf token [options]',
             description='Consulte a situação atual do auxílio emergencial.',
         )
 
