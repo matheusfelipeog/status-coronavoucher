@@ -19,8 +19,6 @@ class Coronavoucher(object):
 
     Metódos internos:
 
-    >>>  _request_a_new_sms_token(...)  # Solicite um novo código sms.
-
     >>>  _data_verification(...)  # Verifique se os dados estão válidos
 
     >>>  _get_msg_error(...)  # Pegue a mensagem de erro com base nos dados.
