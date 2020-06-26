@@ -4,7 +4,14 @@ Visualize o status atual da sua solicitação do [auxílio emergencial](https://
 
 > OBS: Este projeto não é uma implementação da Caixa e tampouco com apoio da mesma.
 
-## Objetivo
+
+## ⚠ Atenção
+
+**Este script não funciona mais.**
+
+Nas antigas versões do sistema de registro/consulta do auxílio emergencial da Caixa, o sistema *Captcha* não tinha sido implementado corretamente, possibilitando a utilização de scripts automatizados para realizar consultas diretamente ao servidor, somente com os dados já cadastrados sendo enviados, sem nenhuma especie de bloqueio. Contudo, recentemente (junho/2020), ocorreu uma atualização corrigindo está má implementação, assim **impossibilitando este script de funcionar corretamente.**
+
+## 💡 Objetivo
 
 Fiz este projeto para facilitar na consulta do status do coronavoucher e botar meus conhecimentos em prática.
 
@@ -16,7 +23,7 @@ A consulta é feita diretamente no servidor da caixa, assim evitando: *acessar o
 - Quer integrar em alguma aplicação que desenvolveu;
 - Teve problemas consultando diretamente pelo site.
 
-## Instalação
+## ⚙️ Instalação
 
 O projeto é contruído em `Python 3.x`, então é necessário ter instalado em sua maquína. [[clique aqui para baixar]](https://www.python.org/downloads/)
 
@@ -29,7 +36,7 @@ Em seguida, entre no repositório com `cd ./status-coronavoucher` e instale o m�
 $ pip install requests
 ```
 
-## Uso
+## 💻 Uso
 
 O programa possuí uma interface de linha de comando, assim facilitando ainda mais a consulta.
 
@@ -106,12 +113,12 @@ DT Situação Crédito: None
  }
 ```
 
-## Contribuições
+## 🤝 Contribuições
 
 Caso tenha dicas e propostas para melhorar o projeto, abra uma issue detalhando o que você propõe.
 
 Toda contribuição é bem vinda. 
 
-## Licença
+## 📜 Licença
 
 Este projeto está sobre a licença [MIT](https://github.com/matheusfelipeog/status-coronavoucher/blob/master/LICENSE).
