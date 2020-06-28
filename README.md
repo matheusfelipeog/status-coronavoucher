@@ -13,9 +13,9 @@ Nas antigas versões do sistema de registro/consulta do auxílio emergencial da 
 
 ## 💡 Objetivo
 
-Fiz este projeto para facilitar na consulta do status do coronavoucher e botar meus conhecimentos em prática.
+Fiz este projeto para facilitar na consulta do status do coronavoucher e colocar meus conhecimentos em prática.
 
-A consulta é feita diretamente no servidor da caixa, assim evitando: *acessar o site, preencher captcha, problemas no site.* 
+A consulta é feita diretamente no servidor da caixa, assim evitando: *acessar o site, preencher captcha e problemas no site.* 
 
 ### Isto servirá para você se:
 
@@ -38,7 +38,7 @@ $ pip install requests
 
 ## 💻 Uso
 
-O programa possuí uma interface de linha de comando, assim facilitando ainda mais a consulta.
+O programa possui uma interface de linha de comando, assim, facilitando ainda mais a consulta.
 
 **Para utilização básica, use:**
 ```
@@ -117,7 +117,7 @@ DT Situação Crédito: None
 
 Caso tenha dicas e propostas para melhorar o projeto, abra uma issue detalhando o que você propõe.
 
-Toda contribuição é bem vinda. 
+Toda contribuição é bem-vinda. 
 
 ## 📜 Licença
 
