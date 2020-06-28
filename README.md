@@ -2,18 +2,18 @@
 
 Visualize o status atual da sua solicitação do [auxílio emergencial](https://auxilio.caixa.gov.br/#/inicio) pelo terminal.
 
-> OBS: Este projeto não é uma implementação da Caixa e tampouco com apoio da mesma.
+> OBS: Este projeto não é uma implementação da Caixa e tampouco com apoio dela.
 
 
 ## ⚠ Atenção
 
 **Este script não funciona mais.**
 
-Nas antigas versões do sistema de registro/consulta do auxílio emergencial da Caixa, o sistema *Captcha* não tinha sido implementado corretamente, possibilitando a utilização de scripts automatizados para realizar consultas diretamente ao servidor, somente com os dados já cadastrados sendo enviados, sem nenhuma especie de bloqueio. Contudo, recentemente (junho/2020), ocorreu uma atualização corrigindo essa má implementação, assim **impossibilitando este script de funcionar corretamente.**
+Nas antigas versões do sistema de registro/consulta do auxílio emergencial da Caixa, o sistema *Captcha* não tinha sido implementado corretamente, possibilitando a utilização de scripts automatizados para realizar consultas diretamente ao servidor, somente com os dados já cadastrados sendo enviados, sem nenhuma especie de bloqueio. Contudo, recentemente (junho/2020), ocorreu uma atualização corrigindo essa má implementação, assim, **impossibilitando este script de funcionar corretamente.**
 
 ## 💡 Objetivo
 
-Fiz este projeto para facilitar na consulta do status do coronavoucher e colocar meus conhecimentos em prática.
+Fiz este projeto para facilitar a consulta do status do coronavoucher e colocar meus conhecimentos em prática.
 
 A consulta é feita diretamente no servidor da caixa, assim evitando: *acessar o site, preencher captcha e problemas no site.* 
 
