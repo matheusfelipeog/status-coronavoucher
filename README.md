@@ -9,7 +9,7 @@ Visualize o status atual da sua solicitação do [auxílio emergencial](https://
 
 **Este script não funciona mais.**
 
-Nas antigas versões do sistema de registro/consulta do auxílio emergencial da Caixa, o sistema *Captcha* não tinha sido implementado corretamente, possibilitando a utilização de scripts automatizados para realizar consultas diretamente ao servidor, somente com os dados já cadastrados sendo enviados, sem nenhuma especie de bloqueio. Contudo, recentemente (junho/2020), ocorreu uma atualização corrigindo está má implementação, assim **impossibilitando este script de funcionar corretamente.**
+Nas antigas versões do sistema de registro/consulta do auxílio emergencial da Caixa, o sistema *Captcha* não tinha sido implementado corretamente, possibilitando a utilização de scripts automatizados para realizar consultas diretamente ao servidor, somente com os dados já cadastrados sendo enviados, sem nenhuma especie de bloqueio. Contudo, recentemente (junho/2020), ocorreu uma atualização corrigindo essa má implementação, assim **impossibilitando este script de funcionar corretamente.**
 
 ## 💡 Objetivo
 
